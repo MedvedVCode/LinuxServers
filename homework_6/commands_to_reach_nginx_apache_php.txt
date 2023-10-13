@@ -1,0 +1,117 @@
+----Некоторые команды, которые нашел в хистори)))  
+403  sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+  404  curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor     | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+  405  gpg --dry-run --quiet --no-keyring --import --import-options import-show /usr/share/keyrings/nginx-archive-keyring.gpg
+  406  echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+  407  http://nginx.org/packages/ubuntu `lsb_release -cs` nginx"     | sudo tee /etc/apt/sources.list.d/nginx.list
+  408  sudo apt ypdate
+  409  sudo apt update
+  410  sudo apt install nginx
+611  sudo cat site-nginx.conf
+ 628  sudo apt install php8.1-fpm
+  629  sudo systemctl status php8.1-fpm.service
+632  sudo nano www.conf
+  633  clear
+  634  sudo systemctl restart php8.1-fpm.service
+  635  sudo systemctl status php8.1-fpm.service
+
+----apache2 установил под sudu su (((
+
+664  sudo cp site-apache2.conf /etc/apache2/sites-available/
+ 671  sudo nano ports.conf
+ 674  sudo nano default-ssl.conf
+  675  sudo systemctl restart apache2.service
+677  sudo nano 000-default.conf
+  678  sudo systemctl restart apache2.service
+683  sudo a2ensite site-apache2
+  684  sudo systemctl reload apache2.service
+ 714  sudo a2enmod ssl
+  715  sudo systemctl restart apache2
+ 717  sudo apt install libapache2-mod-php
+
+---/etc/hosts:
+127.0.0.1       localhost
+127.0.1.1       medved-VirtualBox
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+10.0.2.15 site-nginx
+10.0.2.15 site-apache2
+
+----medved@medved-VirtualBox:/etc/ssl$
+итого 60
+drwxr-xr-x   6 root root      4096 окт 11 11:33 ./
+drwxr-xr-x 136 root root     12288 окт 13 09:05 ../
+drwxr-xr-x   2 root root     16384 сен 21 12:31 certs/
+-rw-r--r--   1 root root     12419 мая 24 20:12 openssl.cnf
+drwx--x---   2 root ssl-cert  4096 сен 21 12:31 private/
+drwxr-xr-x   2 root root      4096 окт 11 11:34 site-apache2/
+drwxr-xr-x   2 root root      4096 окт 11 11:34 site-nginx/
+
+----medved@medved-VirtualBox:/etc/ssl/site-nginx$
+итого 16
+drwxr-xr-x 2 root root 4096 окт 11 11:34 ./
+drwxr-xr-x 6 root root 4096 окт 11 11:33 ../
+-rw------- 1 root root 1704 окт 11 11:34 cert.key
+-rw-r--r-- 1 root root 1363 окт 11 11:34 cert.pem
+
+----medved@medved-VirtualBox:/etc/ssl/site-apache2$
+итого 16
+drwxr-xr-x 2 root root 4096 окт 11 11:34 ./
+drwxr-xr-x 6 root root 4096 окт 11 11:33 ../
+-rw------- 1 root root 1700 окт 11 11:34 cert.key
+-rw-r--r-- 1 root root 1367 окт 11 11:34 cert.pem
+
+----medved@medved-VirtualBox:/etc/nginx/conf.d$ ll
+итого 16
+drwxr-xr-x 2 root root 4096 окт 12 10:32 ./
+drwxr-xr-x 7 root root 4096 окт  9 17:37 ../
+-rw-r--r-- 1 root root 1072 апр 11  2023 default.conf
+-rwxr-x--- 1 root root 1657 окт 12 10:32 site-nginx.conf*
+
+----medved@medved-VirtualBox:/etc/apache2/sites-available$
+итого 24
+drwxr-xr-x 2 root root 4096 окт 12 09:58 ./
+drwxr-xr-x 8 root root 4096 окт 12 09:54 ../
+-rw-r--r-- 1 root root 1334 окт 12 09:58 000-default.conf
+-rw-r--r-- 1 root root 6339 окт 12 09:56 default-ssl.conf
+-rwxr-x--- 1 root root 1009 окт 12 09:52 site-apache2.conf*
+
+---mysql:
+sudo su - root
+mysql
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| my_test_db         |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+use my_test_db;
+
+ show tables;
++----------------------+
+| Tables_in_my_test_db |
++----------------------+
+| test                 |
++----------------------+
+1 row in set (0,01 sec)
+select * from test;
++------+
+| i    |
++------+
+|    1 |
+|    2 |
+|    3 |
+|    4 |
+|    5 |
++------+
+
