@@ -1,0 +1,16 @@
+#!/bin/bash
+
+directory=$1
+
+if [ -d $directory ] 
+	then
+		for h in .bak .backup .tmp
+			do
+				rm "$directory"/*"$h"
+			done
+#		echo "Начинаю очистку директории: $directory"
+#		find "$directory" -type f \( -name "*.bak" -o -name "*.tmp" -o -name "*.backup" \) -del
+	else
+		echo "Нет директории с именем $directory"
+		exit 1
+fi

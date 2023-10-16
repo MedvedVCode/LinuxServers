@@ -1,0 +1,21 @@
+
+#!/bin/bash
+
+directory=$1
+
+if [ ! -d $directory ]; then
+		echo "$directory : не существует такой папки"
+		exit 1
+	else
+		owners=$(ls -l "$directory" | awk '{if ($NF != "." && $NF != "..") print $3}' | sort | uniq)
+		for owner in $owners
+			do
+				if [ ! -d "$directory"/"$owner" ]; then
+					mkdir "$directory"/"$owner"
+				fi
+				for file in $(find "$directory" -type f -user "$owner")
+					do
+						cp  "$file"  "$directory"/"$owner"/
+					done
+			done
+fi
